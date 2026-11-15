@@ -16,7 +16,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MyPortfolio', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'MyPortfolio',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
@@ -26,9 +29,15 @@ class MyHomePage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(child: InfoCard(title: 'NPM', content: npm)),
-                Expanded(child: InfoCard(title: 'Name', content: nama)),
-                Expanded(child: InfoCard(title: 'Class', content: kelas)),
+                Expanded(
+                  child: InfoCard(title: 'NPM', content: npm),
+                ),
+                Expanded(
+                  child: InfoCard(title: 'Name', content: nama),
+                ),
+                Expanded(
+                  child: InfoCard(title: 'Class', content: kelas),
+                ),
               ],
             ),
             const SizedBox(height: 32),
@@ -101,7 +110,9 @@ class ItemCard extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text('Kamu telah menekan tombol ${item.name}!')),
+              SnackBar(
+                content: Text('Kamu telah menekan tombol ${item.name}!'),
+              ),
             );
         },
         child: Column(
