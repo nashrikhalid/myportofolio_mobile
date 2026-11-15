@@ -7,9 +7,9 @@ class MyHomePage extends StatelessWidget {
   final String nama = 'Nashri Khalid';
   final String kelas = 'PBP F';
   final List<ItemHomepage> items = const [
-    ItemHomepage('Lihat Proyek', Icons.folder),
-    ItemHomepage('Tambah Proyek', Icons.add_circle),
-    ItemHomepage('Logout', Icons.logout),
+    ItemHomepage('Lihat Proyek', Icons.folder, Color(0xFF1557A0)),
+    ItemHomepage('Tambah Proyek', Icons.add_circle, Color(0xFF176744)),
+    ItemHomepage('Logout', Icons.logout, Color(0xFFAB3035)),
   ];
 
   @override
@@ -78,10 +78,11 @@ class InfoCard extends StatelessWidget {
 }
 
 class ItemHomepage {
-  const ItemHomepage(this.name, this.icon);
+  const ItemHomepage(this.name, this.icon, this.color);
 
   final String name;
   final IconData icon;
+  final Color color;
 }
 
 class ItemCard extends StatelessWidget {
@@ -92,7 +93,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.secondary,
+      color: item.color,
       borderRadius: BorderRadius.circular(12),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
