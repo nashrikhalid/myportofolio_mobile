@@ -1,6 +1,6 @@
 # MyPortfolio Mobile
 
-Aplikasi Flutter untuk portofolio Nashri Khalid (2506657131, PBP F). Di halaman utama, tiga kartu menampilkan identitas pemilik. Tombol Lihat Proyek, Tambah Proyek, dan Logout menampilkan konfirmasi sesuai aksi yang dipilih.
+Aplikasi Flutter untuk portofolio Nashri Khalid (2506657131, PBP F). Di halaman utama, tiga kartu menampilkan identitas pemilik. Tombol Lihat Proyek, Tambah Proyek, dan Logout menampilkan konfirmasi sesuai aksi yang dipilih. Tambah Proyek juga membuka formulir proyek; drawer menyediakan navigasi Home dan Add Project.
 
 ## Menjalankan proyek
 
@@ -11,11 +11,19 @@ flutter pub get
 flutter run -d chrome
 ```
 
-Gunakan `flutter analyze` untuk memeriksa kode dan `flutter test` untuk menguji profil dan respons tombol.
+Gunakan `flutter analyze` untuk memeriksa kode dan `flutter test` untuk menguji profil, respons tombol, navigasi drawer, validasi, isi dialog, dan reset formulir.
 
 ## Progres
 
 Tutorial 08 memisahkan konfigurasi aplikasi di `lib/main.dart` dari halaman menu di `lib/menu.dart`. Tugas 7 mengganti profil Burhan dengan identitas pemilik, memberi warna tersendiri pada setiap aksi, dan menguji pesan yang muncul ketika tombol ditekan.
+
+### Tutorial 09
+
+- Halaman berada di `lib/screens/`, sedangkan drawer dan kartu aksi berada di `lib/widgets/`.
+- Tombol Tambah Proyek memakai `Navigator.push`; drawer memakai `Navigator.pushReplacement` setelah ditutup.
+- Form berisi nama, deskripsi, kategori, teknologi, dan tautan proyek. Nama dan deskripsi wajib diisi dan tidak boleh hanya spasi.
+- Save menampilkan seluruh isian dalam dialog. OK menutup dialog dan mereset semua isian, termasuk kategori ke Web Development. Data belum disimpan ke database.
+- Impor Material menggunakan paket `material_ui` sesuai tutorial.
 
 ### Tugas 7
 
