@@ -1,6 +1,6 @@
 # MyPortfolio Mobile
 
-Aplikasi Flutter untuk portofolio Nashri Khalid (2506657131, PBP F). Di halaman utama, tiga kartu menampilkan identitas pemilik. Tombol Lihat Proyek, Tambah Proyek, dan Logout menampilkan konfirmasi sesuai aksi yang dipilih. Tambah Proyek juga membuka formulir proyek; drawer menyediakan navigasi Home dan Add Project.
+Aplikasi Flutter untuk portofolio Nashri Khalid (2506657131, PBP F). Di halaman utama, tiga kartu menampilkan identitas pemilik. Tombol Lihat Proyek, Tambah Proyek, dan Logout menampilkan konfirmasi sesuai aksi yang dipilih. Tambah Proyek juga membuka formulir proyek; drawer menyediakan navigasi Home, Add Project, dan Tambah Pengalaman. Kartu Tambah Pengalaman membuka formulir yang mengikuti model Experience pada proyek Django.
 
 ## Menjalankan proyek
 
@@ -13,17 +13,6 @@ flutter run -d chrome
 
 Gunakan `flutter analyze` untuk memeriksa kode dan `flutter test` untuk menguji profil, respons tombol, navigasi drawer, validasi, isi dialog, dan reset formulir.
 
-## Progres
-
-Tutorial 08 memisahkan konfigurasi aplikasi di `lib/main.dart` dari halaman menu di `lib/menu.dart`. Tugas 7 mengganti profil Burhan dengan identitas pemilik, memberi warna tersendiri pada setiap aksi, dan menguji pesan yang muncul ketika tombol ditekan.
-
-### Tutorial 09
-
-- Halaman berada di `lib/screens/`, sedangkan drawer dan kartu aksi berada di `lib/widgets/`.
-- Tombol Tambah Proyek memakai `Navigator.push`; drawer memakai `Navigator.pushReplacement` setelah ditutup.
-- Form berisi nama, deskripsi, kategori, teknologi, dan tautan proyek. Nama dan deskripsi wajib diisi dan tidak boleh hanya spasi.
-- Save menampilkan seluruh isian dalam dialog. OK menutup dialog dan mereset semua isian, termasuk kategori ke Web Development. Data belum disimpan ke database.
-- Impor Material menggunakan paket `material_ui` sesuai tutorial.
 
 ### Tugas 7
 
@@ -50,6 +39,19 @@ Tutorial 08 memisahkan konfigurasi aplikasi di `lib/main.dart` dari halaman menu
 
 6. **Bagaimana memilih hot reload, hot restart, atau full restart?** Saat mengganti warna kartu di mode debug, hot reload memuat kode Dart yang berubah dan membangun ulang tampilan sambil mempertahankan state. main dan initState tidak dijalankan ulang. Kalau perubahan perlu mengulang inisialisasi, misalnya mengubah nilai yang dipasang di initState, gunakan hot restart. Aplikasi Dart dimulai lagi dan state lokal hilang. Jika yang berubah adalah kode native atau konfigurasi build Android, hentikan aplikasi lalu jalankan kembali agar bagian native dikompilasi ulang.
 
-## Penggunaan AI
+### Tugas 8
 
-Prompt tugas: Codex membaca PDF tugas dan kode Tutorial 08 serta membantu menjalankan pemeriksaan Flutter. 
+1. **Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.** 
+Jawab: `Navigator.push()` menambahkan halaman baru di atas stack, `pushReplacement()` mengganti halaman teratas, sedangkan `pop()` menghapus halaman teratas. Kartu Tambah Pengalaman memakai `push()` untuk membuka `ExperienceFormPage`, sehingga halaman utama tetap berada di bawahnya dan dapat ditampilkan lagi lewat tombol kembali perangkat. Di drawer, opsi Home menutup drawer dengan `pop()`, lalu memakai `pushReplacement()` untuk mengganti halaman saat ini dengan `MyHomePage`. Alur Home ini juga bisa dipakai di Chrome. `pushReplacement()` hanya mengganti route teratas, bukan menghapus seluruh riwayat navigasi.
+
+2. **Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.** 
+Jawab: `Scaffold` menyediakan susunan halaman, `AppBar` memberi judul, dan `LeftDrawer` yang sama menyediakan pilihan navigasi pada halaman utama, form proyek, dan form pengalaman. Halaman utama dan form pengalaman sama-sama mengambil warna AppBar dari `Theme.of(context).colorScheme.primary`. Form pengalaman memakai `onPrimary` untuk warna teks agar sesuai dengan pasangan warna tema. Dengan begitu, halaman baru tetap terasa sebagai bagian dari aplikasi portofolio yang sama.
+
+3. **Mengapa tata letak tersebut dipilih untuk formulir? Jelaskan peran widget pengatur jarak dan widget penggulir ketika ruang layar terbatas.** 
+Jawab: Input disusun vertikal menggunakan `Column` agar urutannya mudah diikuti, mulai dari jabatan sampai tanggal pengalaman. `SizedBox` memisahkan kolom supaya label, pesan kesalahan, dan tombol tidak berhimpitan. `Padding` memberi ruang di tepi layar, sedangkan `SingleChildScrollView` memungkinkan input dan tombol Simpan dijangkau saat layar pendek atau papan ketik terbuka. `SafeArea` menjaga isi dari area sistem perangkat. Kartu menu memakai dua kolom pada layar di bawah 600 piksel, dan ringkasan dialog dapat digulir ketika isinya panjang.
+
+4. **Apa peran GlobalKey<FormState>, validator, dan validate() saat tombol Simpan ditekan? Berikan satu contoh nilai yang ditolak oleh validasi dan jelaskan mengapa memilih jenis input atau papan ketik saja belum cukup.**
+Jawab: `GlobalKey<FormState>` memberi akses ke state form. Setiap `validator` mengembalikan pesan kesalahan atau `null` jika input valid. Tombol Simpan memanggil `_formKey.currentState!.validate()` dan hanya membuka dialog bila semua input lolos. Misalnya, jabatan berisi spasi ditolak setelah `trim()`, jabatan atau organisasi sepanjang 256 karakter ditolak karena model membatasi 255 karakter, dan tanggal selesai sebelum tanggal mulai juga ditolak. Pemilih tanggal hanya membantu memilih tanggal yang sah; pengguna masih bisa memilih tanggal selesai yang lebih awal. Begitu juga jenis papan ketik tidak menjamin teks wajib sudah diisi atau panjangnya sesuai model. Karena itu, aturan tetap diperiksa oleh validator.
+
+## Penggunaan AI
+Codex digunakan untuk membantu saya memahami pembuatan formulir Pengalaman, validasi, navigasi, pengujian, dan dokumentasi berdasarkan PDF tugas serta tutorial 9. 
