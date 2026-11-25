@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:myportofolio_mobile/main.dart';
 import 'package:myportofolio_mobile/models/experience.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
+import 'package:myportofolio_mobile/services/api_client.dart';
 import 'package:myportofolio_mobile/widgets/project_card.dart';
 
 void main() {
@@ -43,7 +44,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(apiClient: ApiClient()));
     final card = find.widgetWithText(ItemCard, 'Tambah Pengalaman');
     await tester.ensureVisible(card);
     await tester.tap(card);
